@@ -2,7 +2,156 @@
 <html>
     <head>
         <link href="style.css" rel="stylesheet" type="text/css"/>
-       
+        
+        <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+
+        <script type="text/javascript">
+    
+            $(document).ready(function(){
+
+                $("#btnCompose").click(function(){
+                   
+                    $("#SendEmail").show();
+                    $("#Inbox").hide();
+                    $("#SentMail").hide();
+                    $("#InboxMenu").removeClass("active")
+                    $("#SentMenu").removeClass("active")
+            });
+
+                $("#InboxMenu").click(function(){
+                    $("#SendEmail").hide();
+                    $("#Inbox").show();
+                    $("#SentMail").hide();
+                    $("#InboxMenu").addClass("active")
+                    $("#SentMenu").removeClass("active")
+           })
+                $("#SentMenu").click(function(){
+                    $("#SendEmail").hide();
+                    $("#Inbox").hide();
+                    $("#SentMail").show();
+                    $("#InboxMenu").removeClass("active")
+                    $("#SentMenu").addClass("active")
+                })
+                
+                $(".Unread").mouseenter(function(){
+                   var x= $(this).find(".emailAction").show()
+                })
+
+                $(".Unread").mouseleave(function(){
+                   var x= $(this).find(".emailAction").hide()
+                })
+
+
+                
+                $("#chkAll").click(function(){
+                  
+                    if($(this).prop("checked")==true){
+                        $("#Inbox table input").each(function(){
+                            $(this).prop("checked",true)
+                        })
+                    }
+                    else
+                    {
+                        $("#Inbox table input").prop("checked",false)
+                    }
+                })
+
+                $("#imgdeleteAll").click(function(){
+                  
+                    $("#Inbox table input").each(function(){
+                        debugger
+                            if($(this).prop("checked")==true)
+                            {
+                                $(this).parents("tr").remove()
+                                
+                            }
+                    });
+                    $("#chkAll").prop("checked",false)
+                    
+                    
+                })
+
+                $("#imgMarkRead").click(function(){
+                    $("#Inbox table input").each(function(){               
+                    $(this).parents("tr").removeClass("Unread")
+                    });
+                })
+
+
+                $(".from").click(function(){
+                    $(this).parents("tr").removeClass("Unread")
+                })
+
+                
+               $(".emailAction #read").click(function(){
+                    $(this).parents("tr").addClass("Unread")
+                })
+
+                $(".emailAction #delete").click(function(){
+                    $(this).parents("tr").remove()
+                })
+
+
+                $("#btnSend").click(function(){
+                    var today=new Date();
+                    var StringDate= today.toDateString()
+                    $("#tblSent").append("<tr><td><input type='checkbox'/></td><td>" +$("#txtTo").val()+ 
+                                    "</td><td>"+$("#txtSubject").val()+"</td><td>"+ StringDate +"</td></tr>")
+                    var To=$(this).attr('placeholder')
+                    $("#txtTo").val(To);
+                    var Sub=$(this).attr('placeholder')
+                    $("#txtSubject").val(Sub)
+                    $("#txtBody").val("")
+                    
+                })
+
+
+               $(".CancelBox").click(function(){
+                    debugger
+                    $("#SendEmail").hide();
+                    $("#Inbox").show();
+                    $("#SentMail").hide();
+                    $("#InboxMenu").addClass("active")
+                    
+                })
+
+
+                $("#chkAllSent").click(function(){
+                    if($(this).prop("checked")==true){
+                        $("#tblSent").find('input').each(function(){
+                        $(this).prop("checked",true)
+                        })
+                    }
+                    else
+                    {
+                        $("#tblSent").find('input').each(function(){
+                        $(this).prop("checked",false)
+                        })
+                    }
+                    
+                })
+
+
+                $("#deleteAllSent").click(function(){
+                    $("#tblSent").find('input').each(function(){
+                        debugger
+                            if($(this).prop("checked")==true)
+                            {
+                                $(this).parents("tr").remove()
+                                
+                            }
+                    });
+                    $("#chkAllSent").prop("checked",false)
+                })
+
+                
+            
+                
+
+        });
+        
+        
+        </script>
 
 
     </head>
@@ -122,7 +271,7 @@
                     <button class="btn ButtonSubmit" id="btnSend">Send</button>
                 </div>
                 <div class="CancelBox">
-                    <button class="btn btn-default" onclick="Toggle('Cancel')" >Cancel</button>
+                    <button class="btn btn-default"  >Cancel</button>
                 </div>
             </div>
         </div>
